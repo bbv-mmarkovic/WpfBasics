@@ -1,0 +1,71 @@
+﻿<Window x:Class="WhichValueWins.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:WhichValueWins"
+        Title="MainWindow" Height="768" Width="1024"
+        WindowState="Maximized">
+    <Window.Resources>
+        <Storyboard x:Key="{x:Static local:Constants.DoubleAddStoryboard}" FillBehavior="HoldEnd" Duration="10">
+            <DoubleAnimation From="0" To="500" IsAdditive="True" AutoReverse="True" Storyboard.TargetProperty="(Canvas.Left)" />
+        </Storyboard>
+
+        <Storyboard x:Key="{x:Static local:Constants.DoubleOverrideStoryboard}" FillBehavior="Stop" Duration="5">
+            <DoubleAnimation From="500" To="0" AutoReverse="False" Storyboard.TargetProperty="(Canvas.Left)" />
+        </Storyboard>
+        
+        <Style x:Key="{x:Static local:Constants.StyleOneKey}" TargetType="Ellipse">
+            <Setter Property="Canvas.Left" Value="20" />
+        </Style>
+    </Window.Resources>
+
+    <Grid local:PropertyContainer.MyDouble="50">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <StackPanel.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Margin" Value="0,0,5,0" />
+                    <Setter Property="Width" Value="90"></Setter>
+                </Style>
+            </StackPanel.Resources>
+            
+            <Label Content="Animations: "/>
+            <Button Content="Anim 1" Click="ApplyAddAnimationClick" />
+            <Button Content="Anim 2" Click="ApplyOverrideAnimationClick" />
+            <Button Content="Clear Animations" Click="ClearAnimationsClick" />
+            
+            <Label Content="Styles: "/>
+            <Button Content="Apply Style" Click="ApplyStyleClick" />
+            <Button Content="Clear Style" Click="ClearStyleClick" />
+
+            <Label Content="Local Value: "/>
+            <Button Content="SetValue to:" Click="SetValueClick" />
+            <TextBox x:Name="valueTextBox" Text="50" Width="50" />
+            <Button Content="ClearLocalValue" Click="ClearLocalValueClick" />
+
+            <Label Content="Binding (inherited) value: "/>
+            <Button Content="Add Binding" Click="AddBindingClick" />
+            <Button Content="Clear Binding" Click="ClearBindingClick" />
+            <Button Content="Set local attached value" Click="SetLocalAttachedValueClick" />
+            <Button Content="Clear local attached value" Click="ClearLocalAttachedValueClick" />
+            
+        </StackPanel>
+        <!--<Label Content="Before you can apply animation 1, you need to apply a value, either by setting a local value, or by applying the style!" Grid.Row="1"/>-->
+        
+        <Canvas Grid.Row="2">
+            <Ellipse x:Name="myEllipse" 
+                     Canvas.Left="{Binding RelativeSource={RelativeSource Self}, Path=(local:PropertyContainer.MyDouble), Mode=OneWay}" Canvas.Top="5" 
+                     Width="50" Height="50" 
+                     Fill="Red" />
+        </Canvas>
+        
+        <StackPanel Grid.Row="3">
+            <TextBlock Text="{Binding Path=(Canvas.Left), ElementName=myEllipse, StringFormat='Current value: {0}'}" />
+        </StackPanel>
+    </Grid>
+</Window>
