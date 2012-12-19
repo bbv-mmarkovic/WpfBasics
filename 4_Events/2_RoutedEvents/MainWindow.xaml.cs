@@ -1,5 +1,6 @@
 ﻿namespace RoutedEvents
 {
+    using System;
     using System.Windows;
     using System.Windows.Controls;
 
@@ -13,35 +14,25 @@
             InitializeComponent();
         }
 
-        public static readonly RoutedEvent TapEvent = EventManager.RegisterRoutedEvent(
-            "Tap", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MyButtonSimple));
-
-        // Provide CLR accessors for the event 
-        public event RoutedEventHandler Tap
-        {
-            add { AddHandler(TapEvent, value); }
-            remove { RemoveHandler(TapEvent, value); }
-        }
-
-        private void CommonClickHandler(object sender, RoutedEventArgs e)
+        private void CommonClickHandler(object sender, MyButtonSimpleEventArgs e)
         {
             var source = (Button)e.Source;
-            MessageBox.Show("The button " + source.Content + " raised the event.");
+            MessageBox.Show("The button " + source.Content + " raised the event (" + DateTime.Now + ").");
         }
 
         private void Yes_Click(object sender, RoutedEventArgs e)
         {
-            OutputLabel.Content = "Yes clicked";
+            OutputLabel.Content = "Yes clicked (" + DateTime.Now + ")";
         }
 
         private void No_Click(object sender, RoutedEventArgs e)
         {
-            OutputLabel.Content = "No clicked";
+            OutputLabel.Content = "No clicked (" + DateTime.Now + ")";
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
-            OutputLabel.Content = "Cancel clicked";
+            OutputLabel.Content = "Cancel clicked (" + DateTime.Now + ")";
         }
     }
 }
