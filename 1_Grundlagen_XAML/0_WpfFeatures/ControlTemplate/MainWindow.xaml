@@ -1,7 +1,9 @@
 ﻿<Window x:Class="ControlTemplate.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="450" Width="650">
+        Title="MainWindow"
+        Width="650"
+        Height="450">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -9,12 +11,18 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        
-        <!-- following content will be used INSIDE the ControlTemplate -->
-        <Button Content="This is a customized button" Click="CustomButtonClicked">
+
+        <!--  following content will be used INSIDE the ControlTemplate  -->
+        <Button Click="CustomButtonClicked"
+                Content="This is a customized button">
             <Button.Template>
                 <ControlTemplate TargetType="Button">
-                    <Border BorderBrush="Blue" BorderThickness="2" Background="Gray" Margin="20" CornerRadius="15" Padding="20">
+                    <Border Margin="20"
+                            Background="Gray"
+                            BorderBrush="Blue"
+                            BorderThickness="2"
+                            CornerRadius="15"
+                            Padding="20">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -24,16 +32,29 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            
+
                             <TextBlock Text="Yes, I'm a Button!" />
                             <Button Grid.Row="1" Content="I indeed may have a Button inside my ControlTemplate" />
-                            
-                            <Image Source="Images\DSC03283.JPG" Grid.Column="1" MaxWidth="400" MaxHeight="300" />
-                            <TextBlock Text="{TemplateBinding Content}" Grid.Row="1" Grid.Column="1" />
+
+                            <Image Grid.Column="1"
+                                   MaxWidth="400"
+                                   MaxHeight="300"
+                                   Source="Images\DSC03283.JPG" />
+                            <TextBlock Grid.Row="1"
+                                       Grid.Column="1"
+                                       Text="{TemplateBinding Content}" />
                         </Grid>
                     </Border>
                 </ControlTemplate>
             </Button.Template>
         </Button>
+
+        <!--
+            It's more convenient to use styles rather than include the whole XAML code within the button
+            
+            same example with style:
+            <Button Click="CustomButtonClicked" Content="This is a customized button" Style="{StaticResource FancyButton}" />
+        -->
+
     </Grid>
 </Window>
