@@ -2,7 +2,7 @@
 {
     using System;
     using System.Windows;
-    
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -15,8 +15,15 @@
 
         private void PlayMovieClicked(object sender, RoutedEventArgs e)
         {
-            mediaPlayer.Source = new Uri(this.txtMoviePath.Text);
-            mediaPlayer.Play();
+            try
+            {
+                mediaPlayer.Source = new Uri(this.txtMoviePath.Text);
+                mediaPlayer.Play();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
