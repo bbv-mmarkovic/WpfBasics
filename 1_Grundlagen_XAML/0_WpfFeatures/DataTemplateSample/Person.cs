@@ -1,6 +1,6 @@
 ﻿namespace DataTemplateSample
 {
-    public class PersonViewModel
+    public class Person
     {
         public string FirstName { get; set; }
 
